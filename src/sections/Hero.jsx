@@ -1,9 +1,10 @@
 import gsap from "gsap";
-import ComingSoon from "./ComingSoon";
 import { useGSAP } from "@gsap/react";
-import { useMaskSettings } from "../hooks/useMaskSettings";
 
-function Hero() {
+import { useMaskSettings } from "../hooks/useMaskSettings";
+import ComingSoon from "./ComingSoon";
+
+const Hero = () => {
   const { initialMaskPos, initialMaskSize, maskPos, maskSize } =
     useMaskSettings();
 
@@ -12,28 +13,23 @@ function Hero() {
       maskPosition: initialMaskPos,
       maskSize: initialMaskSize,
     });
+
     gsap.set(".mask-logo", { marginTop: "-100vh", opacity: 0 });
+
     gsap.set(".entrance-message", { marginTop: "0vh" });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: ".hero-section",
         start: "top top",
-        end: "+=300%",
         scrub: 2.5,
+        end: "+=200%",
         pin: true,
       },
     });
 
     tl.to(".fade-out", { opacity: 0, ease: "power1.inOut" })
-      .to(
-        ".scale-out",
-        {
-          scale: 1,
-          ease: "power1.inOut",
-        },
-        "50%"
-      )
+      .to(".scale-out", { scale: 1, ease: "power1.inOut" })
       .to(".mask-wrapper", { maskSize, ease: "power1.inOut" }, "<")
       .to(".mask-wrapper", { opacity: 0 })
       .to(
@@ -57,12 +53,13 @@ function Hero() {
         "<"
       );
   });
+
   return (
     <section className="hero-section">
       <div className="size-full mask-wrapper">
         <img
           src="/images/hero-bg.webp"
-          alt="hero-bg-img"
+          alt="background"
           className="scale-out"
         />
         <img
@@ -79,6 +76,7 @@ function Hero() {
           <img src="/images/play.png" alt="play" className="w-7 ml-1" />
         </div>
       </div>
+
       <div>
         <img
           src="/images/big-hero-text.svg"
@@ -90,9 +88,10 @@ function Hero() {
       <div className="fake-logo-wrapper">
         <img src="/images/big-hero-text.svg" className="overlay-logo" />
       </div>
+
       <ComingSoon />
     </section>
   );
-}
+};
 
 export default Hero;
