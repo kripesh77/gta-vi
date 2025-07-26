@@ -1,16 +1,16 @@
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { useRef } from "react";
 
-const FirstVideo = () => {
+function SecondVideo() {
   const videoRef = useRef(null);
 
-  useGSAP(() => {
-    gsap.set(".first-vd-wrapper", { marginTop: "-60vh", opacity: 0 });
+  useGSAP(function () {
+    gsap.set(".lucia", { marginTop: "-150vh", opacity: 0 });
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".first-vd-wrapper",
+        trigger: ".lucia",
         start: "top top",
         end: "+=200% top",
         scrub: 2,
@@ -18,16 +18,10 @@ const FirstVideo = () => {
       },
     });
 
-    tl.to(".hero-section", { delay: 0.5, opacity: 0, ease: "power1.inOut" });
-    tl.to(
-      ".first-vd-wrapper",
-      {
-        opacity: 1,
-        duration: 2,
-        ease: "power1.inOut",
-      },
-      "<"
-    );
+    tl.to(".jason", { opacity: 0, ease: "power1.inOut" }).to(".lucia", {
+      opacity: 1,
+      ease: "power1.inOut",
+    });
 
     videoRef.current.onloadedmetadata = () => {
       tl.to(
@@ -36,26 +30,26 @@ const FirstVideo = () => {
           currentTime: videoRef.current.duration,
           duration: 3,
           ease: "power1.inOut",
+          objectPosition: "0% 0%",
         },
         "<"
       );
     };
   }, []);
-
   return (
-    <section className="first-vd-wrapper">
+    <section className="lucia">
       <div className="h-dvh">
         <video
           ref={videoRef}
           muted
           playsInline
           preload="auto"
-          src="/videos/output1.mp4"
-          className="first-vd"
+          src="/videos/output2.mp4"
+          className="size-full object-cover object-[70%_0%] second-vd"
         />
       </div>
     </section>
   );
-};
+}
 
-export default FirstVideo;
+export default SecondVideo;
